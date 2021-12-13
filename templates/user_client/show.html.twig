@@ -1,0 +1,165 @@
+{% extends 'base_register.html.twig' %}
+{% form_theme form_transaction 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}{{ user_client.nom ~" "~  user_client.prenom }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="card-title"><h4>Make transaction to {{ user_client.nom }} {{ user_client.prenom }}</h4></div>
+                    {{ form_start(form_transaction) }}
+                    {{ form_row(form_transaction.solde) }}
+                    <button type="reset" class="btn btn-sm btn-default"> Annuler</button>
+                    <button type="submit" class="btn btn-sm btn-primary"> Make a transfer</button>
+                    {{ form_end(form_transaction) }}
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title"><h5>Les transactions effectuées</h5></div>
+                    <ul>
+                        {% if list_transaction | length == 0 %}
+                            <li class="list list-inline"><span class="badge badge-danger">Aucun transfert</span> </li>
+                        {% else %}
+                            {% for li in list_transaction %}
+                                <li class="list list-inline"> {{ loop.index }} -  <span class="badge badge-success"> {{ user_client.device }} {{ li.solde }} - {{ li.createdAt | date('d-m-Y à H:i:s') }}</span> </li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body">
+
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title"><h5>Les Opérations effectuées</h5></div>
+                    <ul>
+                        {% if lists_transfert | length ==0 %}
+                            <li class="list list-inline"><span class="badge badge-danger">Le client n'a effectué aucun virement</span> </li>
+                        {% else %}
+                            {% for list_trans in lists_transfert %}
+                                <li class="list list-inline"> {{ loop.index }} -  <span class="badge badge-{{ list_trans.status ? 'success' : 'danger' }}"> {{ app.user.device ~list_trans.amount }} ||  {{ list_trans.iban  }} =====> {{ list_trans.createdAt | date('d-m-Y à H:i:s') }}</span> <a href="#createmodal" class="modal-trigger tooltipped"  data-target="{{ path('add_operation_modal', {id: list_trans.id }) }}" >+</a></li>
+                                <ul>
+                                    {% if list_trans.operations | length ==0 %}
+                                        <li class="list list-inline"><span class="badge badge-danger">Aucune operation sur ce virement</span> </li>
+                                    {% else %}
+                                        {% for operation in list_trans.operations %}
+                                            <li class="list list-inline">
+                                                - <span class="badge badge-dark">{{ operation.frais ? 'Frais de dossier:'~operation.frais : 'Pas de frais' }}</span>
+                                                <br>
+                                                - <span class="badge badge-light">{{ operation.pourcentage ? 'Pourcentage:'~operation.pourcentage~'%' : 'Pas de pourcentage' }}</span>
+                                                <br>
+                                                - <span class="badge badge-danger">{{ operation.createdAt | date('d/m/Y') }}</span>
+                                            </li>
+                                            <hr>
+                                        {% endfor %}
+                                        <div class="text-center"><strong>Transfert effectué à {{ totalPourcentage(list_trans) }}%</strong></div>
+                                    {% endif %}
+                                    <hr>
+                                </ul>
+
+                                {#{% set submit_url=path('add_operation_modal', {id: list_op.id }) %}#}
+                                {#{{ render(controller('App\\Controller\\Admin\\UserClientController::newOperation', {id:list_op.id })) }}#}
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h4>Information du client</h4>
+            <hr>
+            <table class="table table-sm table-border table-striped table-responsive-sm">
+                <tbody>
+                <tr>
+                    <th>Nom et prénom</th>
+                    <td>{{ user_client.prenom ~ " " ~ user_client.nom }}</td>
+                </tr>
+                <tr>
+                    <th>Date_at</th>
+                    <td>{{ user_client.dateAt ? user_client.dateAt|date('d-m-Y') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Pays</th>
+                    <td>{{ user_client.pays }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ user_client.email }}</td>
+                </tr>
+                <tr>
+                    <th>Numero</th>
+                    <td>{{ user_client.numero }}</td>
+                </tr>
+                <tr>
+                    <th>Profession</th>
+                    <td>{{ user_client.profession }}</td>
+                </tr>
+                <tr>
+                    <th>Device</th>
+                    <td>{{ user_client.device }}</td>
+                </tr>
+                <tr>
+                    <th>Created_at</th>
+                    <td>{{ user_client.createdAt ? user_client.createdAt|date('d-m-Y à H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Status du comple</th>
+                    <td> <span class="badge badge-success">Activer</span> <a class="btn btn-sm small btn-info" onclick="confirm('Voulez vous vraiment continuer?')" href="">Désativer le compte</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <a href="{{ path('user_client_index') }}">back to list</a>
+
+    <a href="{{ path('user_client_edit', {'id': user_client.id}) }}">edit</a>
+
+    <div class="modal fade" id="createmodal" tabindex="-1" role="dialog" aria-labelledby="createmodal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <h5 class="modal-title text-center">Ajout d'operation</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="modal-body">
+                    <div class="p-1">
+                        <div class="modal-view">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    {{ include('user_client/_delete_form.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            $('.modal-trigger').click(function () {
+                $('.modal').modal();
+                url = $(this).attr('data-target');
+                $.get(url, function (data) {
+                    $('.modal-view').html(data);
+                    console.log(data)
+                    $('#createmodal').modal('open');
+                })
+            })
+        })
+    </script>
+{% endblock %}

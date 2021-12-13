@@ -1,0 +1,91 @@
+{% extends "base_register.html.twig" %}
+{% form_theme form "bootstrap_4_layout.html.twig" %}
+{% block title 'Sign In' %}
+
+{% block body %}
+	<div class="row">
+		<div class="col-md-6">
+			<img src={{asset("assets/register/images/undraw_remotely_2j6y.svg")}} alt="Image" class="img-fluid">
+		</div>
+		<div class="col-md-6 contents">
+			<div class="row justify-content-center">
+				<div class="col-md-8">
+					<div class="mb-4">
+						<h3>Sign In</h3>
+						<p class="mb-4">Your account HSBC information</p>
+					</div>
+
+						{{form_start(form)}}
+						<div class="form-group">
+							{{form_row(form.username, {label: "Pseudo", attr: {placeholder: "Votre Pseudo"}})}}
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									{{form_row(form.nom, {label: "Nom de famille", attr: {placeholder: "Votre nom"}})}}
+
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									{{form_row(form.prenom, {label: "Prénom(s)", attr: {placeholder: "Votre prénom"}})}}
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							{{form_row(form.date_at, {label: "Date de naissance"})}}
+						</div>
+
+						<div class="form-group">
+							{{form_row(form.pays, {label: "Pays de résidence", attr: {placeholder: "Votre Pays"}})}}
+						</div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{form_row(form.numero, {label: "Numéro de téléphone", attr: {placeholder: "Votre Numéro"}})}}
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{form_row(form.profession, {label: "Profession", attr: {placeholder: "Votre profession"}})}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="form-group">
+                                    {{form_row(form.email, {label: "E-mail", attr: {placeholder: "Votre e-mail"}})}}
+
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    {{form_row(form.device, {label: "Devise monnaie", attr: {placeholder: "Votre dévise"}})}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+{{form_row(form.password, {label: "Mot de passe", attr: {placeholder: "Votre mot de passe"}})}}
+
+                        </div>
+
+                        <div class="form-group">
+                            {{form_row(form.cfrm_password, {label: "Confirmation du mot de passe", attr: {placeholder: "Confirmation"}})}}
+                        </div>
+
+                        <input type="submit" value="Login" class="btn btn-block btn-primary">
+
+
+						{{form_end(form)}}
+					</div>
+			</div>
+		</div>
+
+	</div>
+
+{% endblock %}

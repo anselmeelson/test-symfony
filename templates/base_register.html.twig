@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Registration
+			{% endblock %}
+		</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+		<link rel="stylesheet" href={{asset("assets/register/fonts/icomoon/style.css")}}>
+		<link rel="icon" href={{asset("assets/register/img/logo.svg")}}>
+
+		<link rel="stylesheet" href={{asset("assets/register/css/owl.carousel.min.css")}}>
+		<meta
+		name="description" content={{asset("assets/register/Sign in to your HSBC account")}}>
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href={{asset("assets/register/css/bootstrap.min.css")}}>
+
+		<!-- Style -->
+
+		{# <link rel="stylesheet" href={{asset("assets/register/css/style.css")}}> #}
+
+		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+			{% block stylesheets %}
+		{{ encore_entry_link_tags('app') }}
+	{% endblock %}
+	</head>
+		<body>
+			<div class="content" style="margin-top: 120px"> <div class="container">
+				{% for message in app.flashes('success') %}
+					<section>
+						<div class="container">
+							<div class="alert alert-success">
+								{{ message }}
+							</div>
+						</div>
+					</section>
+				{% endfor %}
+
+				{% for message in app.flashes('danger') %}
+					<section>
+						<div class="container">
+							<div class="alert alert-danger">
+								{{ message }}
+							</div>
+						</div>
+					</section>
+				{% endfor %}
+
+				{% for message in app.flashes('info') %}
+					<section>
+						<div class="container">
+							<div class="alert alert-info">
+								{{ message }}
+							</div>
+						</div>
+					</section>
+				{% endfor %}
+
+				{% block body %}{% endblock %}
+			</div>
+		</div>
+
+		<script src={{asset("assets/register/js/jquery-3.3.1.min.js")}}></script>
+		<script src={{asset("assets/register/js/popper.min.js")}}></script>
+		<script src={{asset("assets/register/js/bootstrap.min.js")}}></script>
+		<script src={{asset("assets/register/js/main.js")}}></script>
+		<script>
+			function googleTranslateElementInit() {
+new google.translate.TranslateElement({
+pageLanguage: 'en'
+}, 'google_translate_element');
+
+/*
+          To remove the "powered by google",
+          uncomment one of the following code blocks.
+          NB: This breaks Google's Attribution Requirements:
+          https://developers.google.com/translate/v2/attribution#attribution-and-logos
+      */
+
+// Native (but only works in browsers that support query selector)
+// if(typeof(document.querySelector) == 'function') {
+document.querySelector('.goog-logo-link').setAttribute('style', 'display: none');
+document.querySelector('.goog-te-gadget').setAttribute('style', 'font-size: 0');
+// }
+
+// If you have jQuery - works cross-browser - uncomment this
+// jQuery('.goog-logo-link').css('display', 'none');
+// jQuery('.goog-te-gadget').css('font-size', '0');
+}
+		</script>
+		<script src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+	</body>
+</html>
+

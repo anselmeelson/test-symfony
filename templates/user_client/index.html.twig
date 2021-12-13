@@ -1,0 +1,39 @@
+{% extends 'base_register.html.twig' %}
+
+{% block title %}UserClient index{% endblock %}
+
+{% block body %}
+    <h1>UserClient index</h1>
+
+    <table class="table table-striped table-hover table-sm table-responsive-sm">
+        <thead class="">
+            <tr>
+                <th>Nom complet</th>
+                <th>Pays</th>
+                <th>Email</th>
+                <th>Device</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user_client in user_clients %}
+            <tr>
+                <td>{{ user_client.nom }} {{ user_client.prenom }}</td>
+                <td>{{ user_client.pays }}</td>
+                <td>{{ user_client.email }}</td>
+                <td>{{ user_client.device }}</td>
+                <td>
+                    <a href="{{ path('user_client_show', {'id': user_client.id}) }}">show</a>
+                    <a href="{{ path('user_client_edit', {'id': user_client.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="14">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_client_new') }}">Create new</a>
+{% endblock %}

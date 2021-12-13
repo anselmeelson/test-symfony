@@ -1,0 +1,11 @@
+{% extends 'base_register.html.twig' %}
+
+{% block title %}New UserClient{% endblock %}
+
+{% block body %}
+    <h1>Create new UserClient</h1>
+
+    {{ include('user_client/_form.html.twig') }}
+
+    <a href="{{ path('user_client_index') }}">back to list</a>
+{% endblock %}

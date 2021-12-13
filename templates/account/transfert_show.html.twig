@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title 'Status du transfert' %}
+
+{% block body %}
+    <div class="container">
+        <div class="mb-5">
+            <span class="text-sm text-italic text-cyan">Progression du transfert</span> <br>
+            <div class="progress bg-secondary" style="height: 40px; align-content: center">
+                <div class="progress-bar {{ transfert.status ? 'bg-primary' : 'bg-danger' }} progress-bar-animated" role="progressbar" style="width: {{ totalPourcentage(transfert) }}%" aria-valuenow="{{ totalPourcentage(transfert) }}" aria-valuemin="0" aria-valuemax="100"><strong>{{ totalPourcentage(transfert) }}%</strong></div>
+            </div>
+        </div>
+        {% if not transfert.status %}
+        <div class="mb-5">
+            <div class="card card-danger card-outline">
+                <div class="card-body text-center">
+                    Les frais de dossier s'élève a  <strong class="text-info">{{ transfert.operations.last.frais }} {{ app.user.device  }}</strong>, consectetur adipisicing elit. Ea excepturi ipsam iusto laborum laudantium molestiae
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-6 m-auto">
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <h3 class="profile-username text-center"> {{ app.user.device }} {{ transfert.amount }} </h3>
+
+                        <p class="text-muted text-center">
+                            {{ transfert.status ? "<span class='badge badge-info'>En cours</span>" : "<span class='badge badge-danger'>Bloqué</span>" }}
+                        </p>
+
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b>Banque</b> <a class="float-right">{{ transfert.bankName }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Propriétaire du compte</b> <a class="float-right">{{ transfert.fullName }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>IBAN</b> <a class="float-right">{{ transfert.iban }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Code SWIFT</b> <a class="float-right">{{ transfert.codeSwift }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Pays</b> <a class="float-right">{{ transfert.pays }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Date du transfert</b> <a class="float-right">{{ transfert.createdAt | date('d/m/Y à H:i:s') }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Dévise</b> <a class="float-right">{{ app.user.device }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

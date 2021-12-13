@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'My profile' %}
+
+{% block body %}
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div>
+                <div class="card card-widget widget-user">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="widget-user-header bg-info">
+                        <h3 class="widget-user-username">{{ app.user.prenom | upper ~" "~ app.user.nom | upper }}</h3>
+                        <h5 class="widget-user-desc"> Current bank account</h5>
+                    </div>
+                    <div class="widget-user-image">
+                        <img class="img-circle elevation-2" src="{{ asset('assets/register/img/profil/profil.jpeg') }}" alt="User Avatar">
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card bg-gradient-default">
+                                    <div class="card-header border-0">
+
+                                        <h3 class="card-title">
+                                            <i class="fas fa-bank"></i>
+                                            <h3>Account Informations</h3>
+                                        </h3>
+                                    </div>
+                                    <hr>
+                                    <!-- /.card-header -->
+                                    <div class="card-body pt-0">
+                                        <h1 class="text-danger">{{ totalAmount(app.user) }} </h1>
+                                        <hr>
+                                        <table class="table table-striped table-hover">
+                                            <tr>
+                                                <th>Type of account</th>
+                                                <td>Current account </td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>Creation date</th>
+                                                <td>  {{ app.user.createdAt | date('d/m/Y') }} </td>
+                                            </tr>
+                                        </table>
+                                        <hr>
+                                        <a href="{{ path('account_transfer') }}" class="btn btn-primary btn-block">Make a transfer</a>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <!-- Profile Image -->
+                                <div class="card card-primary card-outline">
+                                    <div class="card-body box-profile">
+                                        <h3 class="profile-username text-center">Nom complet</h3>
+
+                                        <p class="text-muted text-center">Profession</p>
+
+                                        <ul class="list-group list-group-unbordered mb-3">
+                                            <li class="list-group-item">
+                                                <b>Prénom</b> <a class="float-right">{{app.user.prenom}}</a>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <b>Nom</b> <a class="float-right">{{ app.user.nom }}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+
+                                <!-- About Me Box -->
+                                <div class="card card-primary">
+                                    <div class="card-body">
+
+                                        <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+
+                                        <p class="text-muted">{{ app.user.pays }}, California</p>
+
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+{% endblock %}
+
+{% block page_title %}
+    Profile
+{% endblock %}
+

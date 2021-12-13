@@ -1,0 +1,170 @@
+{% extends "base.html.twig" %}
+
+{% block title 'My account' %}
+
+{% block body %}
+    <!-- start banner Area -->
+    <div class="container text-center mb-3">
+        <div class="row fullscreen d-flex align-items-center justify-content-start">
+            <div class="banner-content col-lg-12 col-md-12">
+                <h5 class="text-white text-uppercase">Votre tableau de bord</h5>
+                <h1 class="text-uppercase">
+                    <span class="bg-gradient-gray pl-2 pr-2">{{ totalAmount(app.user) }}</span> <br>
+                    Bienvenue a
+                    <span class="text-danger">HSBC</span>
+                    BANK
+
+                </h1>
+
+                <a href="{{ path('account_transfer') }}" class="primary-btn header-btn text-uppercase">Transferer</a>
+            </div>
+        </div>
+    </div>
+
+
+    {% if trans_alert %}
+    <div class="container row">
+            <div class="mb-5 col-md-6 m-auto">
+                <div class="card card-danger card-outline">
+                    <div class="card-body text-center">
+                        <h4 class="text-danger"> <i class="fas fa-sms"></i> Alert</h4>
+                        <hr>
+                        <div class="card-comment">
+                            Les frais de dossier s'élève a  consectetur adipisicing elit. Ea excepturi ipsam iusto laborum laudantium molestiae
+                            <ul class="bg-black text-light">
+                                {% for trans in trans_alert %}
+                                    <li class="list-inline-item">{{loop.index}}- {{ trans.iban }} <a href="{{ path('transfert_show', {id: trans.id}) }}">Consulter</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <section class="col-md-8 connectedSortable">
+            <div class="card bg-gradient-default">
+                <div class="card-header border-0">
+
+                    <h3 class="card-title">
+                        <i class="fas fa-list"></i>
+                        Les tranferts effectués
+                    </h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body pt-0">
+                    <table id="example2" class="table table-bordered table-hover table-sm table-responsive-sm">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>IBAN</th>
+                            <th>Type d'opération</th>
+                            <th>Montant</th>
+                            <th>Consulter</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for transfert in transferts %}
+                            <tr>
+                                <td>{{ transfert.createdAt | date('d/m/Y') }}</td>
+                                <td>{{ transfert.iban }}</td>
+                                <td class="text-danger">Retrait</td>
+                                <td> {{ app.user.device }} {{ transfert.amount }}</td>
+                                <td> {{ transfert.status ? "<span class='badge badge-success'>En cours</span>" :  "<span class='badge badge-danger'>Bloqué</span>" }} </td>
+                                <td>
+                                    <a href="{{ path('transfert_show', {id: transfert.id}) }}">Consulter</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>Date</th>
+                            <th>IBAN</th>
+                            <th>Type d'opération</th>
+                            <th>Montant</th>
+                            <th>Consulter</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </section>
+        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+        <section class="col-md-4 connectedSortable">
+
+            <!-- Map card -->
+            <div class="card bg-gradient-primary" style="display: none">
+                <div class="card-footer bg-transparent">
+                    <div class="row">
+                        <div class="col-4 text-center">
+                            <div id="sparkline-1"></div>
+                            <div class="text-white">Visitors</div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-4 text-center">
+                            <div id="sparkline-2"></div>
+                            <div class="text-white">Online</div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-4 text-center">
+                            <div id="sparkline-3"></div>
+                            <div class="text-white">Sales</div>
+                        </div>
+                        <!-- ./col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+            </div>
+            <!-- /.card -->
+
+            <!-- Calendar -->
+            <div class="card bg-gradient-success">
+                <div class="card-header border-0">
+
+                    <h3 class="card-title">
+                        <i class="far fa-calendar-alt"></i>
+                        Calendar
+                    </h3>
+                    <!-- tools card -->
+                    <div class="card-tools">
+                        <!-- button with a dropdown -->
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
+                                <i class="fas fa-bars"></i>
+                            </button>
+                            <div class="dropdown-menu" role="menu">
+                                <a href="#" class="dropdown-item">Add new event</a>
+                                <a href="#" class="dropdown-item">Clear events</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item">View calendar</a>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <!-- /. tools -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body pt-0">
+                    <!--The calendar -->
+                    <div id="calendar" style="width: 100%"></div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </section>
+
+
+        <!-- right col -->
+    </div>
+    <!-- End banner Area -->
+
+{% endblock %}

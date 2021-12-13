@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Account!{% endblock %}</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href={{ asset("assets/register/plugins/fontawesome-free/css/all.min.css") }}>
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet"
+          href={{ asset("assets/register/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css") }}>
+    <!-- iCheck -->
+    <link rel="stylesheet" href={{ asset("assets/register/plugins/icheck-bootstrap/icheck-bootstrap.min.css") }}>
+    <!-- JQVMap -->
+    <link rel="stylesheet" href={{ asset("assets/register/plugins/jqvmap/jqvmap.min.css") }}>
+    <!-- Theme style -->
+    <link rel="stylesheet" href={{ asset("assets/register/dist/css/adminlte.min.css") }}>
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href={{ asset("assets/register/plugins/overlayScrollbars/css/OverlayScrollbars.min.css") }}>
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href={{ asset("assets/register/plugins/daterangepicker/daterangepicker.css") }}>
+    <!-- summernote -->
+    <link rel="stylesheet" href={{ asset("assets/register/plugins/summernote/summernote-bs4.min.css") }}>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+    <!-- Preloader -->
+    <div class="preloader flex-column justify-content-center align-items-center">
+        <img class="animation__shake" src={{ asset("assets/register/dist/img/AdminLTELogo.png")}} alt="AdminLTELogo" height="60" width="60">
+    </div>
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="index.php" class="nav-link">Home</a>
+            </li>
+        </ul>
+
+
+        <ul class="navbar-nav ml-auto">
+
+            <li class="nav-item">
+                <a class="nav-link" data-widget="fullscreen" href="javascript:void()"
+                   onclick="window.location.hash='#googtrans(en)';location.reload();">
+                    <img src={{ asset("assets/register/assets/img/en.png")}} alt="" title="ANGLAIS">
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-widget="fullscreen" href="javascript:void()"
+                   onclick="window.location.hash='#googtrans(fr)';location.reload();">
+                    <img src={{ asset("assets/register/assets/img/fr.png")}} alt="" title="FRANCAIS">
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" data-widget="fullscreen" href="javascript:void()"
+                   onclick="window.location.hash='#googtrans(it)';location.reload();">
+                    <img src={{ asset("assets/register/assets/img/it.png")}} alt="" title="ITALIE">
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+                {pageLanguage: 'fr'},
+                'google_translate_element'
+            );
+
+            /*
+                To remove the "powered by google",
+                uncomment one of the following code blocks.
+                NB: This breaks Google's Attribution Requirements:
+                https://developers.google.com/translate/v2/attribution#attribution-and-logos
+            */
+
+            // Native (but only works in browsers that support query selector)
+            //if(typeof(document.querySelector) == 'function') {
+            document.querySelector('.goog-logo-link').setAttribute('style', 'display: none');
+            document.querySelector('.goog-te-gadget').setAttribute('style', 'font-size: 0');
+            //}
+
+            // If you have jQuery - works cross-browser - uncomment this
+            //jQuery('.goog-logo-link').css('display', 'none');
+            //jQuery('.goog-te-gadget').css('font-size', '0');
+        }
+    </script>
+    <script src={{ asset("assets/register/img/logo.jfif")}}></script>
+
+
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="" class="brand-link">
+            <img src="https://media-exp1.licdn.com/dms/image/C4D0BAQF73WTayb799Q/company-logo_200_200/0/1519952411433?e=2159024400&v=beta&t=C_0b1lnXXzOJSHloATK9l1UKzpLxpJJGLOOv5d_cL7s"
+                 alt="" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">HSBC</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    <img src="{{ asset('assets/register/img/profil/profil.jpeg') }}" class="img-circle elevation-2" alt="User Image">
+                </div>
+                <div class="info">
+                    <a href="#" class="d-block">{{ app.user.prenom ~" "~ app.user.nom }}</a>
+                </div>
+            </div>
+
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
+
+                    <li class="nav-header">Menu</li>
+                    <li class="nav-item">
+                        <a href="{{ path('home') }}" class="nav-link {{ current_page is defined and current_page =='home' ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-home"></i>
+                            <p>
+                                Acceuil
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('profile') }}  " class="nav-link {{ current_page is defined and current_page =='profile' ? 'active' : '' }}">
+                            <i class="nav-icon far fa-user"></i>
+                            <p>
+                                Profile
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link  {{ current_page is defined and current_page =='transfert' ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-exchange-alt"></i>
+                            <p>
+                                Transaction
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item {{ current_page is defined and current_page =='transfert' ? 'active' : '' }}">
+                                <a href="{{ path('account_transfer') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Make a transfer</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {% if app.user %}
+                        <li class="nav-item">
+                            <a href="{{ path('logout') }}" class="nav-link">
+                                <i class="nav-icon fas fa-sign-out-alt mr-1"></i>
+                                <p>
+                                    Se déconnecter
+                                </p>
+                            </a>
+                        </li>
+                    {% endif %}
+
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">{% block page_title %} Mon compte {% endblock %}</h1>
+                    </div>
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Start Banner Notification -->
+                {% for message in app.flashes('success') %}
+                    <section>
+                        <div class="container">
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        </div>
+                    </section>
+                {% endfor %}
+
+                {% for message in app.flashes('danger') %}
+                    <section>
+                        <div class="container">
+                            <div class="alert alert-danger">
+                                {{ message }}
+                            </div>
+                        </div>
+                    </section>
+                {% endfor %}
+
+                {% for message in app.flashes('info') %}
+                    <section>
+                        <div class="container">
+                            <div class="alert alert-info">
+                                {{ message }}
+                            </div>
+                        </div>
+                    </section>
+                {% endfor %}
+                <!-- End Banner Notification -->
+                {% block body %}{% endblock %}
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+
+<!-- jQuery -->
+<script src={{ asset("assets/register/plugins/jquery/jquery.min.js") }}></script>
+<!-- jQuery UI 1.11.4 -->
+<script src={{ asset("assets/register/plugins/jquery-ui/jquery-ui.min.js") }}></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src={{ asset("assets/register/plugins/bootstrap/js/bootstrap.bundle.min.js") }}></script>
+<!-- ChartJS -->
+<script src={{ asset("assets/register/plugins/chart.js/Chart.min.js") }}></script>
+<!-- Sparkline -->
+<script src={{ asset("assets/register/plugins/sparklines/sparkline.js") }}></script>
+<!-- JQVMap -->
+<script src={{ asset("assets/register/plugins/jqvmap/jquery.vmap.min.js") }}></script>
+<script src={{ asset("assets/register/plugins/jqvmap/maps/jquery.vmap.usa.js") }}></script>
+<!-- jQuery Knob Chart -->
+<script src={{ asset("assets/register/plugins/jquery-knob/jquery.knob.min.js") }}></script>
+<!-- daterangepicker -->
+<script src={{ asset("assets/register/plugins/moment/moment.min.js") }}></script>
+<script src={{ asset("assets/register/plugins/daterangepicker/daterangepicker.js") }}></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src={{ asset("assets/register/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js") }}></script>
+<!-- Summernote -->
+<script src={{ asset("assets/register/plugins/summernote/summernote-bs4.min.js") }}></script>
+<!-- overlayScrollbars -->
+<script src={{ asset("assets/register/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js") }}></script>
+<!-- AdminLTE App -->
+<script src={{ asset("assets/register/dist/js/adminlte.js") }}></script>
+<!-- AdminLTE for demo purposes -->
+<script src={{ asset("assets/register/dist/js/demo.js") }}></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src={{ asset("assets/register/dist/js/pages/dashboard.js") }}></script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

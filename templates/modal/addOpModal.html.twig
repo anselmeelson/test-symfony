@@ -1,0 +1,16 @@
+{% form_theme form_operation 'bootstrap_4_layout.html.twig' %}
+
+<div class="container">
+    {{ form_start(form_operation, {'action': path('add_operation_modal', {id: transfert.id })}) }}
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_row(form_operation.frais, {label: 'Frais de dossier', attr: {placeholder: 'Les frais de dossier'}}) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form_operation.pourcentage, {label: 'Ajouter pourcentage', attr: {placeholder: 'Ajout de pourcentage'}}) }}
+        </div>
+    </div>
+    <button type="reset" class="btn btn-sm btn-default"> Annuler</button>
+    <button type="submit" class="btn btn-sm btn-primary"> Send</button>
+    {{ form_end(form_operation) }}
+</div>
